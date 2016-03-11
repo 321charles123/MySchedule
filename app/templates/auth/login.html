@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Ican - Login{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename="css/login_style.css") }}">
+<style>
+#page_banner{
+	background:transparent;
+}
+</style>
+{% endblock %}
+
+{% block page_content %}
+{{ super() }}
+<div class="login_section">
+    <div class="fullscreen-bg">
+        <video loop muted autoplay poster="" class="fullscreen-bg__video">
+            <source src="{{ url_for('static', filename="video/file.mp4") }}" type="video/mp4">
+            <source src="{{ url_for('static', filename="video/file.webm") }}" type="video/webm">
+            <source src="{{ url_for('static', filename="video/file.ogv") }}" type="video/ogv">
+        </video>
+    </div>
+
+    <div class="slogan_content">
+	<h1>I can </h1>
+	<h4>Plan it, do it, finish it</h4>
+	<h4>You have my word!</h4>
+	<h4><a class="btn btn-primary btn-lg" id="goto_buttom" role="button">Here we go</a></h4>
+    </div>
+</div>
+
+<div class="login_section">
+<div class="content bottom">
+    <div class="col-md-10 col-md-offset-1">
+    <table>
+    <tr>
+    <td class="table-video">
+	<div class="embed-responsive embed-responsive-4by3" id="youtube_video">
+	    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/26U_seo0a1g" allowfullscreen></iframe>
+	</div>
+    </td>
+
+    <td class="table-login">
+	<div class="panel panel-default" id="panel">
+	<div class="panel-body">
+	    <br>
+    	    {{ wtf.quick_form(form) }}
+    	    <br>
+    	    <p>Forgot your password? <a href="{{ url_for('auth.password_reset_request') }}">Click here to reset it</a>.</p>
+    	    <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>
+     	</div>
+     	</div>
+    </td>
+    </tr>
+    </table>
+    </div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type=text/javascript>
+$("#goto_buttom").bind('click', function(){
+	$('html,body').animate({scrollTop:$('.bottom').offset().top}, 800);
+});
+$("#submit").removeClass("btn-default");
+$("#submit").addClass("btn-primary");
+</script>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Ican{% endblock %}
+
+{% block head %}
+{{ super() }}
+  <link rel="stylesheet/less" type="text/css" href="{{ url_for('static', filename="css/clndr.less") }}" />
+  <script src="{{ url_for('static', filename="js/less.js") }}" type="text/javascript"></script>
+
+  <script src="{{ url_for('static', filename="js/underscore.js") }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename="js/moment.js") }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename="js/clndr.js") }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename="js/site.js") }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block page_content %}
+<section>
+{{ super() }}
+<div class="page_content col-md-8 col-md-offset-2 calendar">
+        <div id="full-clndr" class="clearfix">
+          <script type="text/template" id="full-clndr-template">
+            <div class="clndr-controls">
+              <div class="clndr-previous-button">&lt;</div>
+              <div class="clndr-next-button">&gt;</div>
+              <div class="current-month"><%= month %> <%= year %></div>
+            </div>
+
+            <div class="clndr-grid">
+              <div class="days-of-the-week clearfix">
+                <% _.each(daysOfTheWeek, function(day) { %>
+                  <div class="header-day"><%= day %></div>
+                <% }); %>
+              </div>
+              <div class="days" id="days">
+                <% _.each(days, function(day) { %>
+                  <div class="<%= day.classes %>" id="<%= day.date.format("YYYY-MM-DD") %>"><span class="day-number"><%= day.day %></span></div>
+                <% }); %>
+              </div>
+            </div>
+
+            <div class="event-listing">
+              <div class="event-listing-title">TASKS THIS DATE</div>
+                  <div class="event-item">
+                    <div class="event-item-name" id="Task1_"><input type="checkbox" id="checkbox1" onclick="check(this)"><span id="TTask1"></span></input></div>
+                    <div class="event-item-name" id="Task2_"><input type="checkbox" id="checkbox2" onclick="check(this)"><span id="TTask2"></span></input></div>
+                    <div class="event-item-name" id="Task3_"><input type="checkbox" id="checkbox3" onclick="check(this)"><span id="TTask3"></span></input></div>
+                    <div class="event-item-name" id="Task4_"><input type="checkbox" id="checkbox4" onclick="check(this)"><span id="TTask4"></span></input></div>
+                    <div class="event-item-name" id="Task5_"><input type="checkbox" id="checkbox5" onclick="check(this)"><span id="TTask5"></span></input></div>
+                  </div>
+              </div>
+            </div>
+          </script>
+        </div>
+</div>
+
+<div class="modal fade bs-example-modal-ms" id="tasks_submit" tabindex="-1" role="dialog" aria-labelledby="tasks_submit" style="padding-top:2%">
+	<div class="modal-dialog modal-ms" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Tasks on <span id="task_date"></span></h4>
+			</div>
+			<div class="modal-body">
+			{{ wtf.quick_form(form) }}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="close" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="t_submit">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+</section>
+{% endblock %}
+
